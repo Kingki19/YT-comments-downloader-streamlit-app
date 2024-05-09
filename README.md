@@ -1,5 +1,5 @@
-# YT-comments-downloader-streamlit-app
-Download Comments from Youtube Video without difficulty.
+# Youtube Comments Downloader Streamlit App
+**Download Comments from Youtube Video without difficulty.**
 
 **Technology**:
 - [Streamlit](https://docs.streamlit.io/get-started)
