@@ -8,7 +8,6 @@ def youtube_url_to_df(Youtube_URL: str) -> DataFrame:
         try:
                 # Initiate Downloader and Youtube_url
                 downloader = YoutubeCommentDownloader()
-                Youtube_URL = #Input Youtube video URL that you want to extract it's comment
                 comments = downloader.get_comments_from_url(Youtube_URL, sort_by=SORT_BY_POPULAR)
                 
                 # Initiate a dictionary to save all comments from Youtube Video
