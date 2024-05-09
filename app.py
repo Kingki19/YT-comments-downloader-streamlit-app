@@ -37,7 +37,8 @@ def youtube_url_to_df(Youtube_URL: str) -> DataFrame:
                 return comments_df
         
         except Exception as error:
-                st.exception(error)
+                if Youtube_URL is not "":
+                        st.exception(error)
                 return None
                 
 def download_df(df: DataFrame, label: str) -> None:
@@ -62,7 +63,10 @@ def main():
         st.divider()
         url_text = st.text_input("Input Youtube URL")
         raw_df = youtube_url_to_df(url_text)
-        if raw_df is not None or False or "":
+        
+        if raw_df is None or False or "":
+                st.info('Please enter the correct YouTube link')
+        else:
                 download_df(raw_df, "Raw")
                 st.dataframe(raw_df)
 main()
