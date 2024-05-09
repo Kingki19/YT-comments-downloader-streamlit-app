@@ -38,13 +38,31 @@ def youtube_url_to_df(Youtube_URL: str) -> DataFrame:
         
         except Exception as error:
                 st.exception(error)
-                return
+                return None
+                
+def download_df(df: DataFrame, label: str) -> None:
+        """Function to add button to download df"""
+        # Option for download format
+        format_download = st.radio("Pilih format download:", ['CSV', 'Excel'])
+        
+        # User option
+        if format_download == 'CSV':
+            download_format = 'text/csv'
+            file_extension = 'csv'
+        elif format_download == 'Excel':
+            download_format = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            file_extension = 'xlsx'
+        
+        # Add download button from dataframe
+        st.download_button(label=f"Download {label} DataFrame ({format_download})", data=df.to_csv(index=False) if format_download == 'CSV' else df.to_excel(index=False, engine='openpyxl'), file_name=f'dataframe.{file_extension}', mime=download_format)
 
 def main():
         st.header("Youtube Comments Downloader Streamlit App")
         st.write("Download Comments from Youtube Video without difficulty")
         st.divider()
         url_text = st.text_input("Input Youtube URL")
-        st.write(url_text)
-
+        raw_df = youtube_url_to_df(url_text)
+        if raw_df is not None or False or "":
+                download_df(raw_df, "Raw")
+                st.dataframe(raw_df)
 main()
