@@ -3,6 +3,7 @@ import pandas as pd
 from pandas.core.frame import DataFrame
 from youtube_comment_downloader import *
 
+@st.cache
 def youtube_url_to_df(Youtube_URL: str) -> DataFrame:
         """Function to execute """
         try:
