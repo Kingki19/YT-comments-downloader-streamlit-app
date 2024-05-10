@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from pandas.core.frame import DataFrame
 from youtube_comment_downloader import *
+import io
 
 @st.cache
 def youtube_url_to_df(Youtube_URL: str) -> DataFrame:
@@ -41,23 +42,44 @@ def youtube_url_to_df(Youtube_URL: str) -> DataFrame:
                 if Youtube_URL is not "":
                         st.exception(error)
                 return None
-                
+
+@st.cache
 def download_df(df: DataFrame, label: str) -> None:
         """Function to add button to download df"""
-        # Option for download format
-        format_download = st.radio("Pilih format download:", ['CSV', 'Excel'])
+        # # Option for download format
+        # format_download = st.radio("Pilih format download:", ['CSV', 'Excel'])
         
-        # User option
-        if format_download == 'CSV':
-            download_format = 'text/csv'
-            file_extension = 'csv'
-        elif format_download == 'Excel':
-            download_format = 'application/vnd.ms-excel'
-            file_extension = 'xlsx'
+        # # User option
+        # if format_download == 'CSV':
+        #     download_format = 'text/csv'
+        #     file_extension = 'csv'
+        # elif format_download == 'Excel':
+        #     download_format = 'application/vnd.ms-excel'
+        #     file_extension = 'xlsx'
         
-        # Add download button from dataframe
-        st.download_button(label=f"Download {label} DataFrame ({format_download})", data=df.to_csv(index=False) if format_download == 'CSV' else df.to_excel(index=False, engine='xlsxwriter'), file_name=f'dataframe.{file_extension}', mime=download_format)
+        # # Add download button from dataframe
+        # st.download_button(label=f"Download {label} DataFrame ({format_download})", data=df.to_csv(index=False) if format_download == 'CSV' else df.to_excel(index=False, engine='xlsxwriter'), file_name=f'dataframe.{file_extension}', mime=download_format)
 
+        csv_button, excel_button = st.columns(2)
+        with csv_button:
+                st.download_button(label=f"Download {label} dataframe in CSV", data=df.to_csv(index=False), file_name = f'dataframe.csv', mime = 'text/csv')
+        with excel_button:
+                buffer = io.BytesIO()
+                # Create a Pandas Excel writer using XlsxWriter as the engine.
+                with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+                        # Write each dataframe to a different worksheet.
+                        df.to_excel(writer, sheet_name='Sheet1')
+                                               
+                        # Close the Pandas Excel writer and output the Excel file to the buffer
+                        writer.save()
+                        
+                        st.download_button(
+                                label=f"Download {label} dataframe in Excel",
+                                data=buffer,
+                                file_name="dataframe.xlsx",
+                                mime="application/vnd.ms-excel"
+                        )
+        
 def main():
         st.header("Youtube Comments Downloader Streamlit App")
         st.write("Download Comments from Youtube Video without difficulty")
