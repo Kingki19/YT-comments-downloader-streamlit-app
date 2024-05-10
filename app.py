@@ -56,7 +56,7 @@ def download_df(df: DataFrame, label: str) -> None:
             file_extension = 'xlsx'
         
         # Add download button from dataframe
-        st.download_button(label=f"Download {label} DataFrame ({format_download})", data=df.to_csv(index=False) if format_download == 'CSV' else df.to_excel(index=False, engine='openpyxl'), file_name=f'dataframe.{file_extension}', mime=download_format)
+        st.download_button(label=f"Download {label} DataFrame ({format_download})", data=df.to_csv(index=False) if format_download == 'CSV' else df.to_excel(index=False, engine='xlsxwriter'), file_name=f'dataframe.{file_extension}', mime=download_format)
 
 def main():
         st.header("Youtube Comments Downloader Streamlit App")
