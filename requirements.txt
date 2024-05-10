@@ -2,3 +2,4 @@ streamlit
 pandas
 youtube-comment-downloader
 io
+xlsxwriter
