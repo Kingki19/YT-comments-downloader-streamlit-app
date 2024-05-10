@@ -43,7 +43,6 @@ def youtube_url_to_df(Youtube_URL: str) -> DataFrame:
                         st.exception(error)
                 return None
 
-@st.cache
 def download_df(df: DataFrame, label: str) -> None:
         """Function to add button to download df"""
         # # Option for download format
