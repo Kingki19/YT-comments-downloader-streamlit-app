@@ -52,7 +52,7 @@ def download_df(df: DataFrame, label: str) -> None:
             download_format = 'text/csv'
             file_extension = 'csv'
         elif format_download == 'Excel':
-            download_format = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            download_format = 'application/vnd.ms-excel'
             file_extension = 'xlsx'
         
         # Add download button from dataframe
