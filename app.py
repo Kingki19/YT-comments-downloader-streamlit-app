@@ -50,15 +50,18 @@ def download_df(df: DataFrame, label: str) -> None:
         
         # User option
         if format_download == 'CSV':
-            download_format = 'text/csv'
-            file_extension = 'csv'
+                download_format = 'text/csv'
+                file_extension = 'csv'
+                data_df = df.to_csv(index=False)
         elif format_download == 'Excel':
-            download_format = 'application/vnd.ms-excel'
-            file_extension = 'xlsx'
-        
+                download_format = 'application/vnd.ms-excel'
+                file_extension = 'xlsx'
+                excel_bytes = io.BytesIO()
+                data_df = df.to_excel(excel_bytes, index=False, engine='xlsxwriter')
+                
         # Add download button from dataframe
         try:
-                st.download_button(label=f"Download {label} DataFrame ({format_download})", data=df.to_csv(index=False) if format_download == 'CSV' else df.to_excel(index=False, engine='xlsxwriter'), file_name=f'dataframe.{file_extension}', mime=download_format)
+                st.download_button(label=f"Download {label} DataFrame ({format_download})", data = data_df, file_name=f'dataframe.{file_extension}', mime=download_format)
         except Exception as error:
                 st.exception(error)
         
