@@ -54,10 +54,10 @@ def download_df(df: DataFrame, label: str) -> None:
                 file_extension = 'csv'
                 data_df = df.to_csv(index=False)
         elif format_download == 'Excel':
-                download_format = 'application/vnd.ms-excel'
+                download_format = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                 file_extension = 'xlsx'
                 excel_bytes = io.BytesIO()
-                data_df = df.to_excel(excel_bytes, index=False, engine='xlsxwriter')
+                data_df = df.to_excel(excel_bytes, index=False)
                 
         # Add download button from dataframe
         try:
