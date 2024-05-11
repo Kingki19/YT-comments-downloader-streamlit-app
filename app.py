@@ -61,25 +61,6 @@ def download_df(df: DataFrame, label: str) -> None:
                 st.download_button(label=f"Download {label} DataFrame ({format_download})", data=df.to_csv(index=False) if format_download == 'CSV' else df.to_excel(index=False, engine='xlsxwriter'), file_name=f'dataframe.{file_extension}', mime=download_format)
         except Exception as error:
                 st.exception(error)
-        # csv_button, excel_button = st.columns(2)
-        # with csv_button:
-        #         st.download_button(label=f"Download {label} dataframe in CSV", data=df.to_csv(index=False), file_name = f'dataframe.csv', mime = 'text/csv')
-        # with excel_button:
-        #         buffer = io.BytesIO()
-        #         # Create a Pandas Excel writer using XlsxWriter as the engine.
-        #         with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-        #                 # Write each dataframe to a different worksheet.
-        #                 df.to_excel(writer, sheet_name='Sheet1')
-                                               
-        #                 # Close the Pandas Excel writer and output the Excel file to the buffer
-        #                 writer.save()
-                        
-        #                 st.download_button(
-        #                         label=f"Download {label} dataframe in Excel",
-        #                         data=buffer,
-        #                         file_name="dataframe.xlsx",
-        #                         mime="application/vnd.ms-excel"
-        #                 )
         
 def main():
         st.header("Youtube Comments Downloader Streamlit App")
